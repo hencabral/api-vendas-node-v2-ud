@@ -1,8 +1,8 @@
 import AppError from '@shared/errors/AppError'
 import { getCustomRepository } from 'typeorm'
 import authConfig from '@config/auth'
-import User from '../typeorm/entities/User'
-import UsersRepository from '../typeorm/repositories/UserRepository'
+import User from '../infra/typeorm/entities/User'
+import UsersRepository from '../infra/typeorm/repositories/UserRepository'
 import { compare, hash } from 'bcryptjs'
 import { sign } from 'jsonwebtoken'
 
