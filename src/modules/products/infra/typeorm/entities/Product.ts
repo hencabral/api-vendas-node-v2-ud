@@ -1,5 +1,4 @@
-// eslint-disable-next-line prettier/prettier
-import OrdersProducts from '@modules/orders/infra/typeorm/entities/OrdersProducts'
+import OrdersProducts from '../../../../../modules/orders/infra/typeorm/entities/OrdersProducts'
 import {
   Column,
   CreateDateColumn,
