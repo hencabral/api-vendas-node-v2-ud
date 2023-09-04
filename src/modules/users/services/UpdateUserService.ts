@@ -1,25 +1,23 @@
-import { getCustomRepository } from 'typeorm'
 import AppError from '@shared/errors/AppError'
-import UsersRepository from '../infra/typeorm/repositories/UserRepository'
 import User from '../infra/typeorm/entities/User'
+import { IUpdateUser } from '../domain/models/IUpdateUser'
+import { inject, injectable } from 'tsyringe'
+import { IUsersRepository } from '../domain/repositories/IUsersRepository'
 
-interface IRequest {
-  id: string
-  name: string
-  email: string
-}
-
+@injectable()
 class UpdateUserService {
-  public async execute({ id, name, email }: IRequest): Promise<User> {
-    const usersRepository = getCustomRepository(UsersRepository)
-
-    const user = await usersRepository.findOne(id)
+  constructor(
+    @inject('UsersRepository')
+    private usersRepository: IUsersRepository,
+  ) {}
+  public async execute({ id, name, email }: IUpdateUser): Promise<User> {
+    const user = await this.usersRepository.findById(id)
 
     if (!user) {
       throw new AppError('User not found.')
     }
 
-    const userEmailExists = await usersRepository.findByEmail(email)
+    const userEmailExists = await this.usersRepository.findByEmail(email)
 
     if (userEmailExists && email != user.email) {
       throw new AppError('There is already one user with this email.')
@@ -28,7 +26,7 @@ class UpdateUserService {
     user.name = name
     user.email = email
 
-    await usersRepository.save(user)
+    await this.usersRepository.save(user)
 
     return user
   }

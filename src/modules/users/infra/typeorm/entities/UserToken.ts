@@ -1,8 +1,15 @@
-// eslint-disable-next-line prettier/prettier
-import { Column, CreateDateColumn, Entity, Generated, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
+import { IUserToken } from '@modules/users/domain/models/IUserToken'
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  Generated,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm'
 
 @Entity('user_tokens')
-class UserToken {
+class UserToken implements IUserToken {
   @PrimaryGeneratedColumn('uuid')
   id: string
 
